@@ -70,6 +70,7 @@ export default function DashboardPage() {
     createOrUpdateDirector,
     removeDirector,
     createOrUpdatePage,
+    removePage,
     createOrUpdateHeroSlide,
     removeHeroSlide,
     removeSubscriber,
@@ -422,17 +423,20 @@ export default function DashboardPage() {
 
   const handlePageSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingId) return;
     try {
       const gridImages: string[] = [];
       if (pageGridImage1) gridImages.push(pageGridImage1);
       if (pageGridImage2) gridImages.push(pageGridImage2);
       if (pageGridImage3) gridImages.push(pageGridImage3);
 
+      const generatedSlug = pageSlug.trim()
+        ? pageSlug.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
+        : pageTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
       const payload = {
-        id: editingId,
+        id: modalType === "edit" ? (editingId || `page_${Date.now()}`) : `page_${Date.now()}`,
         title: pageTitle,
-        slug: pageSlug,
+        slug: generatedSlug,
         menu_group: pageMenuGroup,
         layout_type: pageLayout,
         content: pageContent,
@@ -441,7 +445,7 @@ export default function DashboardPage() {
         is_published: true
       };
       await createOrUpdatePage(payload);
-      Swal.fire("Berhasil", "Konten dan layout halaman berhasil disimpan", "success");
+      Swal.fire("Berhasil", "Halaman berhasil disimpan", "success");
       setIsModalOpen(false);
       resetForms();
       refreshData();
@@ -1471,11 +1475,24 @@ export default function DashboardPage() {
           {/* ================= TAB 11: KELOLA HALAMAN (SUPER ADMIN) ================= */}
           {activeTab === "pages" && role === "SUPER_ADMIN" && (
             <div className="space-y-6">
-              <div className={`border-b pb-4 transition-colors ${isLightMode ? "border-slate-200" : "border-slate-800"}`}>
-                <h2 className={`text-lg font-black transition-colors ${isLightMode ? "text-slate-800" : "text-white"}`}>Kelola Tampilan & Konten Halaman</h2>
-                <p className={`text-xs transition-colors ${isLightMode ? "text-slate-500" : "text-slate-400"}`}>
-                  Pilih halaman navigasi utama untuk memodifikasi tata letak (template) dan isi konten teks secara dinamis tanpa merusak alur sistem routing.
-                </p>
+              <div className={`border-b pb-4 flex justify-between items-center transition-colors ${isLightMode ? "border-slate-200" : "border-slate-800"}`}>
+                <div>
+                  <h2 className={`text-lg font-black transition-colors ${isLightMode ? "text-slate-800" : "text-white"}`}>Kelola Tampilan & Konten Halaman</h2>
+                  <p className={`text-xs transition-colors ${isLightMode ? "text-slate-500" : "text-slate-400"}`}>
+                    Pilih halaman navigasi utama atau buat halaman kustom baru yang otomatis terintegrasi ke dalam menu navigasi utama.
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    resetForms();
+                    setModalType("add");
+                    setIsModalOpen(true);
+                  }}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black py-2.5 px-4 rounded-xl flex items-center gap-2 cursor-pointer shadow-md shadow-emerald-950/20"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Tambah Halaman Baru</span>
+                </button>
               </div>
 
               <div className={`border rounded-3xl overflow-hidden transition-colors ${isLightMode ? "bg-white border-slate-200 shadow-xs" : "bg-slate-950 border-slate-800"}`}>
@@ -1493,54 +1510,73 @@ export default function DashboardPage() {
                   </thead>
                   <tbody>
                     {pages
-                      .filter(p => [
-                        "renstra", 
-                        "tentang-kami", 
-                        "visi-misi", 
-                        "struktur-organisasi", 
-                        "jajaran-direksi", 
-                        "aksesibilitas-rs", 
-                        "dokter-kami", 
-                        "jadwal-besuk", 
-                        "syarat-pendaftaran-bpjs", 
-                        "tarif-layanan", 
-                        "tempat-tidur", 
-                        "pelayanan-publik"
-                      ].includes(p.slug))
-                      .map((page, idx) => (
-                        <tr 
-                          key={page.id} 
-                          className={`border-b text-xs transition-colors last:border-b-0 ${
-                            isLightMode 
-                              ? "border-slate-150 hover:bg-slate-50 text-slate-700" 
-                              : "border-slate-900 hover:bg-slate-900/40 text-slate-350"
-                          }`}
-                        >
-                          <td className="p-4 text-center text-slate-450 font-bold">{idx + 1}</td>
-                          <td className="p-4 font-extrabold">
-                            <span className={isLightMode ? "text-slate-800" : "text-white"}>{page.title}</span>
-                          </td>
-                          <td className="p-4 capitalize font-medium">{page.menu_group.replace("_", " ")}</td>
-                          <td className="p-4 font-bold">
-                            <span className="px-2.5 py-1 text-[10px] uppercase font-bold rounded-md bg-emerald-950/20 text-emerald-450 border border-emerald-900/20">
-                              {page.layout_type === "split" ? "Template A (Split)" : page.layout_type === "standard" ? "Template B (Standard)" : "Template C (Grid Gallery)"}
-                            </span>
-                          </td>
-                          <td className="p-4 text-center">
-                            <button
-                              onClick={() => openEditPage(page)}
-                              className={`px-4 py-2 border rounded-xl cursor-pointer text-xs font-bold transition-all flex items-center gap-1.5 mx-auto ${
-                                isLightMode 
-                                  ? "bg-slate-50 border-slate-250 text-slate-700 hover:bg-slate-100 hover:text-slate-900" 
-                                  : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
-                              }`}
-                            >
-                              <Edit3 className="w-3.5 h-3.5" />
-                              <span>Edit Konten & Layout</span>
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                      .map((page, idx) => {
+                        const isCore = [
+                          "renstra", 
+                          "tentang-kami", 
+                          "visi-misi", 
+                          "struktur-organisasi", 
+                          "jajaran-direksi", 
+                          "aksesibilitas-rs", 
+                          "dokter-kami", 
+                          "jadwal-besuk", 
+                          "syarat-pendaftaran-bpjs", 
+                          "tarif-layanan", 
+                          "tempat-tidur", 
+                          "pelayanan-publik",
+                          "rawat-inap"
+                        ].includes(page.slug);
+
+                        return (
+                          <tr 
+                            key={page.id} 
+                            className={`border-b text-xs transition-colors last:border-b-0 ${
+                              isLightMode 
+                                ? "border-slate-150 hover:bg-slate-50 text-slate-700" 
+                                : "border-slate-900 hover:bg-slate-900/40 text-slate-350"
+                            }`}
+                          >
+                            <td className="p-4 text-center text-slate-450 font-bold">{idx + 1}</td>
+                            <td className="p-4 font-extrabold">
+                              <span className={isLightMode ? "text-slate-800" : "text-white"}>{page.title}</span>
+                              {!isCore && (
+                                <span className="ml-2 text-[8px] font-black uppercase px-1.5 py-0.5 rounded bg-blue-905/30 text-blue-400 border border-blue-900/20">
+                                  Kustom
+                                </span>
+                              )}
+                            </td>
+                            <td className="p-4 capitalize font-medium">{page.menu_group.replace("_", " ")}</td>
+                            <td className="p-4 font-bold">
+                              <span className="px-2.5 py-1 text-[10px] uppercase font-bold rounded-md bg-emerald-950/20 text-emerald-450 border border-emerald-900/20">
+                                {page.layout_type === "split" ? "Template A (Split)" : page.layout_type === "standard" ? "Template B (Standard)" : "Template C (Grid Gallery)"}
+                              </span>
+                            </td>
+                            <td className="p-4 text-center">
+                              <div className="flex justify-center items-center gap-2">
+                                <button
+                                  onClick={() => openEditPage(page)}
+                                  className={`px-3 py-1.5 border rounded-xl cursor-pointer text-xs font-bold transition-all flex items-center gap-1.5 ${
+                                    isLightMode 
+                                      ? "bg-slate-50 border-slate-250 text-slate-700 hover:bg-slate-100 hover:text-slate-900" 
+                                      : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
+                                  }`}
+                                >
+                                  <Edit3 className="w-3.5 h-3.5" />
+                                  <span>Edit</span>
+                                </button>
+                                {!isCore && (
+                                  <button
+                                    onClick={() => confirmDelete(page.id, removePage)}
+                                    className="p-1.5 bg-red-950/20 hover:bg-red-950/40 border border-red-900/30 rounded-xl text-red-400 cursor-pointer transition-all"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>
@@ -2347,17 +2383,82 @@ export default function DashboardPage() {
 
             {activeTab === "pages" && (
               <form onSubmit={handlePageSubmit} className="space-y-4 animate-fade-in">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Nama Halaman</label>
-                  <input
-                    type="text"
-                    disabled
-                    value={pageTitle}
-                    className={`w-full text-xs font-bold rounded-xl p-3 ${
-                      isLightMode ? "bg-slate-100 border border-slate-200 text-slate-500 font-bold" : "bg-slate-900 border border-slate-800 text-slate-500 font-bold"
-                    }`}
-                  />
-                </div>
+                {/* Check if editing a system core page */}
+                {(() => {
+                  const isCorePageEdit = modalType === "edit" && [
+                    "renstra", 
+                    "tentang-kami", 
+                    "visi-misi", 
+                    "struktur-organisasi", 
+                    "jajaran-direksi", 
+                    "aksesibilitas-rs", 
+                    "dokter-kami", 
+                    "jadwal-besuk", 
+                    "syarat-pendaftaran-bpjs", 
+                    "tarif-layanan", 
+                    "tempat-tidur", 
+                    "pelayanan-publik",
+                    "rawat-inap"
+                  ].includes(pageSlug);
+
+                  return (
+                    <>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Nama Halaman</label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="Contoh: Sejarah Singkat"
+                          value={pageTitle}
+                          onChange={(e) => setPageTitle(e.target.value)}
+                          className={`w-full text-xs font-bold rounded-xl p-3 focus:outline-none focus:border-emerald-500 ${
+                            isLightMode ? "bg-slate-50 border border-slate-200 text-slate-800" : "bg-slate-900 border border-slate-800 text-white"
+                          }`}
+                        />
+                      </div>
+
+                      {!isCorePageEdit && (
+                        <>
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Slug / URL Path</label>
+                            <input
+                              type="text"
+                              required
+                              placeholder="Contoh: jadwal-dokter-gigi"
+                              value={pageSlug}
+                              onChange={(e) => setPageSlug(e.target.value)}
+                              className={`w-full text-xs font-bold rounded-xl p-3 focus:outline-none focus:border-emerald-500 ${
+                                isLightMode ? "bg-slate-50 border border-slate-200 text-slate-800" : "bg-slate-900 border border-slate-800 text-white"
+                              }`}
+                            />
+                            <p className={`text-[9px] font-bold ${isLightMode ? "text-slate-500" : "text-slate-450"}`}>
+                              URL halaman Anda akan menjadi: /namaslug (gunakan huruf kecil dan strip sebagai pemisah).
+                            </p>
+                          </div>
+
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Pilih Grup Menu Navbar</label>
+                            <select
+                              value={pageMenuGroup}
+                              onChange={(e) => setPageMenuGroup(e.target.value as any)}
+                              className={`w-full text-xs font-bold rounded-xl p-3 focus:outline-none focus:border-emerald-500 cursor-pointer ${
+                                isLightMode ? "bg-slate-50 border border-slate-200 text-slate-850" : "bg-slate-900 border border-slate-800 text-white"
+                              }`}
+                            >
+                              <option value="profil" className={isLightMode ? "text-slate-800" : "text-black"}>Profil</option>
+                              <option value="pelayanan" className={isLightMode ? "text-slate-800" : "text-black"}>Pelayanan</option>
+                              <option value="info_pengunjung" className={isLightMode ? "text-slate-800" : "text-black"}>Info Pengunjung</option>
+                              <option value="media" className={isLightMode ? "text-slate-800" : "text-black"}>Media</option>
+                            </select>
+                            <p className={`text-[9px] font-bold ${isLightMode ? "text-slate-500" : "text-slate-455"}`}>
+                              Halaman baru Anda akan otomatis muncul sebagai link di dalam dropdown menu ini pada Navbar utama!
+                            </p>
+                          </div>
+                        </>
+                      )}
+                    </>
+                  );
+                })()}
 
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Pilih Template Layout</label>
