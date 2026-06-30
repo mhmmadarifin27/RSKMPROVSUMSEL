@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Grid, Eye } from "lucide-react";
+import { useData } from "@/app/context/DataContext";
 
 interface StaticPageLayoutProps {
   title: string;
@@ -16,12 +17,25 @@ interface StaticPageLayoutProps {
 export default function StaticPageLayout({
   title,
   menuGroup,
-  layoutType = "standard",
-  imageUrl,
-  gridImages,
+  layoutType: initialLayoutType = "standard",
+  imageUrl: initialImageUrl,
+  gridImages: initialGridImages,
   children,
 }: StaticPageLayoutProps) {
   const [selectedGalleryImg, setSelectedGalleryImg] = useState<string | null>(null);
+  const { pages } = useData();
+
+  // Resolve DB page slug from title
+  let slug = title.toLowerCase().replace(/ & /g, "-").replace(/ /g, "-").replace(/[^a-z0-9\-]/g, "");
+  if (slug === "reanstra") slug = "renstra";
+
+  const dbPage = pages.find((p) => p.slug === slug);
+
+  // Overrides from DB if available
+  const activeLayoutType = dbPage?.layout_type || initialLayoutType;
+  const activeImageUrl = dbPage?.image_url || initialImageUrl;
+  const activeGridImages = dbPage?.grid_images || initialGridImages;
+  const hasDbContent = !!dbPage?.content;
 
   return (
     <div className="w-full py-12 md:py-16 bg-slate-50/30">
@@ -38,7 +52,7 @@ export default function StaticPageLayout({
         </div>
 
         {/* ================= LAYOUT: STANDARD ================= */}
-        {layoutType === "standard" && (
+        {activeLayoutType === "standard" && (
           <article className="max-w-3xl mx-auto space-y-8 animate-fade-in">
             <header className="space-y-3 text-center border-b border-slate-100 pb-6">
               <span className="inline-block bg-slate-100 text-slate-500 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
@@ -50,27 +64,31 @@ export default function StaticPageLayout({
             </header>
 
             {/* Display Cover Image if present */}
-            {imageUrl && (
+            {activeImageUrl && (
               <div className="w-full h-[300px] md:h-[450px] rounded-3xl overflow-hidden shadow-md border border-slate-150">
-                <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
+                <img src={activeImageUrl} alt={title} className="w-full h-full object-cover" />
               </div>
             )}
 
             {/* Content Body */}
             <div className="text-sm leading-relaxed text-slate-600 font-medium font-sans">
-              {children}
+              {hasDbContent && dbPage ? (
+                <div className="space-y-6" dangerouslySetInnerHTML={{ __html: dbPage.content }} />
+              ) : (
+                children
+              )}
             </div>
           </article>
         )}
 
         {/* ================= LAYOUT: SPLIT ================= */}
-        {layoutType === "split" && (
+        {activeLayoutType === "split" && (
           <article className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center animate-fade-in">
             {/* Image (Left) */}
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative w-full max-w-md h-[300px] md:h-[420px] rounded-3xl overflow-hidden shadow-xl border border-slate-150 hover-lift">
                 <img
-                  src={imageUrl || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=80"}
+                  src={activeImageUrl || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=80"}
                   alt={title}
                   className="w-full h-full object-cover"
                 />
@@ -90,14 +108,18 @@ export default function StaticPageLayout({
 
               {/* Content Body */}
               <div className="text-sm leading-relaxed text-slate-600 font-medium">
-                {children}
+                {hasDbContent && dbPage ? (
+                  <div className="space-y-6" dangerouslySetInnerHTML={{ __html: dbPage.content }} />
+                ) : (
+                  children
+                )}
               </div>
             </div>
           </article>
         )}
 
         {/* ================= LAYOUT: GRID ================= */}
-        {layoutType === "grid" && (
+        {activeLayoutType === "grid" && (
           <article className="space-y-12 animate-fade-in">
             <header className="space-y-3 text-center max-w-2xl mx-auto border-b border-slate-100 pb-6">
               <span className="inline-block bg-slate-100 text-slate-500 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">
@@ -109,15 +131,19 @@ export default function StaticPageLayout({
             </header>
 
             {/* Cover photo if uploaded */}
-            {imageUrl && (
+            {activeImageUrl && (
               <div className="w-full h-[300px] md:h-[420px] rounded-3xl overflow-hidden shadow-md border border-slate-150 max-w-5xl mx-auto">
-                <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
+                <img src={activeImageUrl} alt={title} className="w-full h-full object-cover" />
               </div>
             )}
 
             {/* Description Text */}
             <div className="max-w-3xl mx-auto text-sm text-slate-600 font-medium">
-              {children}
+              {hasDbContent && dbPage ? (
+                <div className="space-y-6" dangerouslySetInnerHTML={{ __html: dbPage.content }} />
+              ) : (
+                children
+              )}
             </div>
 
             {/* Gallery Grid */}
@@ -128,7 +154,7 @@ export default function StaticPageLayout({
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                {(gridImages && gridImages.length > 0 ? gridImages : [
+                {(activeGridImages && activeGridImages.length > 0 ? activeGridImages : [
                   "https://images.unsplash.com/photo-1579684389782-64d84b5e901a?w=400&auto=format&fit=crop&q=80",
                   "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400&auto=format&fit=crop&q=80",
                   "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=400&auto=format&fit=crop&q=80"

@@ -39,7 +39,8 @@ type Tab =
   | "directors"
   | "struktur"
   | "hero"
-  | "subscribers";
+  | "subscribers"
+  | "pages";
 
 export default function DashboardPage() {
   const {
@@ -134,6 +135,17 @@ export default function DashboardPage() {
   const [heroImage, setHeroImage] = useState("");
   const [heroOrder, setHeroOrder] = useState(1);
 
+  // Page customization states
+  const [pageTitle, setPageTitle] = useState("");
+  const [pageSlug, setPageSlug] = useState("");
+  const [pageMenuGroup, setPageMenuGroup] = useState<"profil" | "pelayanan" | "info_pengunjung" | "media">("profil");
+  const [pageLayout, setPageLayout] = useState<"standard" | "split" | "grid">("standard");
+  const [pageContent, setPageContent] = useState("");
+  const [pageImage, setPageImage] = useState("");
+  const [pageGridImage1, setPageGridImage1] = useState("");
+  const [pageGridImage2, setPageGridImage2] = useState("");
+  const [pageGridImage3, setPageGridImage3] = useState("");
+
   const [strukturImage, setStrukturImage] = useState("");
 
   // Populate structure image url from pages table
@@ -209,6 +221,16 @@ export default function DashboardPage() {
     setHeroBadge("");
     setHeroImage("");
     setHeroOrder(1);
+
+    setPageTitle("");
+    setPageSlug("");
+    setPageMenuGroup("profil");
+    setPageLayout("standard");
+    setPageContent("");
+    setPageImage("");
+    setPageGridImage1("");
+    setPageGridImage2("");
+    setPageGridImage3("");
   };
 
   // SUBMIT HANDLERS
@@ -398,6 +420,36 @@ export default function DashboardPage() {
     }
   };
 
+  const handlePageSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingId) return;
+    try {
+      const gridImages: string[] = [];
+      if (pageGridImage1) gridImages.push(pageGridImage1);
+      if (pageGridImage2) gridImages.push(pageGridImage2);
+      if (pageGridImage3) gridImages.push(pageGridImage3);
+
+      const payload = {
+        id: editingId,
+        title: pageTitle,
+        slug: pageSlug,
+        menu_group: pageMenuGroup,
+        layout_type: pageLayout,
+        content: pageContent,
+        image_url: pageImage || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=80",
+        grid_images: gridImages,
+        is_published: true
+      };
+      await createOrUpdatePage(payload);
+      Swal.fire("Berhasil", "Konten dan layout halaman berhasil disimpan", "success");
+      setIsModalOpen(false);
+      resetForms();
+      refreshData();
+    } catch {
+      Swal.fire("Error", "Gagal menyimpan perubahan halaman", "error");
+    }
+  };
+
   // DELETE TRIGGERS
   const confirmDelete = (id: string, removeFn: (id: string) => Promise<void>) => {
     Swal.fire({
@@ -498,6 +550,24 @@ export default function DashboardPage() {
     setHeroBadge(hero.badge);
     setHeroImage(hero.image_url);
     setHeroOrder(hero.order_index);
+    setIsModalOpen(true);
+  };
+
+  const openEditPage = (page: any) => {
+    setModalType("edit");
+    setEditingId(page.id);
+    setPageTitle(page.title);
+    setPageSlug(page.slug);
+    setPageMenuGroup(page.menu_group);
+    setPageLayout(page.layout_type);
+    setPageContent(page.content);
+    setPageImage(page.image_url || "");
+    
+    const grids = page.grid_images || [];
+    setPageGridImage1(grids[0] || "");
+    setPageGridImage2(grids[1] || "");
+    setPageGridImage3(grids[2] || "");
+    
     setIsModalOpen(true);
   };
 
@@ -802,6 +872,18 @@ export default function DashboardPage() {
                   >
                     <GitBranch className="w-4 h-4" />
                     <span>Struktur Organisasi</span>
+                  </button>
+
+                  <button
+                    onClick={() => changeTab("pages")}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-left transition-all ${
+                      activeTab === "pages"
+                        ? (isLightMode ? "bg-[#004D24] text-white shadow-inner" : "bg-slate-900 text-emerald-400 border border-slate-800")
+                        : (isLightMode ? "text-emerald-100 hover:bg-[#004D24]/40 hover:text-white" : "text-slate-450 hover:bg-slate-900/60 hover:text-slate-200")
+                    }`}
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>Kelola Halaman</span>
                   </button>
 
                   <button
@@ -1382,6 +1464,85 @@ export default function DashboardPage() {
                     <span>Simpan Bagan Struktur</span>
                   </button>
                 </form>
+              </div>
+            </div>
+          )}
+
+          {/* ================= TAB 11: KELOLA HALAMAN (SUPER ADMIN) ================= */}
+          {activeTab === "pages" && role === "SUPER_ADMIN" && (
+            <div className="space-y-6">
+              <div className={`border-b pb-4 transition-colors ${isLightMode ? "border-slate-200" : "border-slate-800"}`}>
+                <h2 className={`text-lg font-black transition-colors ${isLightMode ? "text-slate-800" : "text-white"}`}>Kelola Tampilan & Konten Halaman</h2>
+                <p className={`text-xs transition-colors ${isLightMode ? "text-slate-500" : "text-slate-400"}`}>
+                  Pilih halaman navigasi utama untuk memodifikasi tata letak (template) dan isi konten teks secara dinamis tanpa merusak alur sistem routing.
+                </p>
+              </div>
+
+              <div className={`border rounded-3xl overflow-hidden transition-colors ${isLightMode ? "bg-white border-slate-200 shadow-xs" : "bg-slate-950 border-slate-800"}`}>
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className={`border-b text-[10px] uppercase tracking-wider transition-colors ${
+                      isLightMode ? "border-slate-200 bg-slate-100/50 text-slate-500 font-extrabold" : "border-slate-800 bg-slate-900/30 text-slate-400"
+                    }`}>
+                      <th className="p-4 w-12 text-center">No</th>
+                      <th className="p-4">Nama Halaman</th>
+                      <th className="p-4">Grup Menu</th>
+                      <th className="p-4">Template Layout</th>
+                      <th className="p-4 w-48 text-center font-bold">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pages
+                      .filter(p => [
+                        "renstra", 
+                        "tentang-kami", 
+                        "visi-misi", 
+                        "struktur-organisasi", 
+                        "jajaran-direksi", 
+                        "aksesibilitas-rs", 
+                        "dokter-kami", 
+                        "jadwal-besuk", 
+                        "syarat-pendaftaran-bpjs", 
+                        "tarif-layanan", 
+                        "tempat-tidur", 
+                        "pelayanan-publik"
+                      ].includes(p.slug))
+                      .map((page, idx) => (
+                        <tr 
+                          key={page.id} 
+                          className={`border-b text-xs transition-colors last:border-b-0 ${
+                            isLightMode 
+                              ? "border-slate-150 hover:bg-slate-50 text-slate-700" 
+                              : "border-slate-900 hover:bg-slate-900/40 text-slate-350"
+                          }`}
+                        >
+                          <td className="p-4 text-center text-slate-450 font-bold">{idx + 1}</td>
+                          <td className="p-4 font-extrabold">
+                            <span className={isLightMode ? "text-slate-800" : "text-white"}>{page.title}</span>
+                          </td>
+                          <td className="p-4 capitalize font-medium">{page.menu_group.replace("_", " ")}</td>
+                          <td className="p-4 font-bold">
+                            <span className="px-2.5 py-1 text-[10px] uppercase font-bold rounded-md bg-emerald-950/20 text-emerald-450 border border-emerald-900/20">
+                              {page.layout_type === "split" ? "Template A (Split)" : page.layout_type === "standard" ? "Template B (Standard)" : "Template C (Grid Gallery)"}
+                            </span>
+                          </td>
+                          <td className="p-4 text-center">
+                            <button
+                              onClick={() => openEditPage(page)}
+                              className={`px-4 py-2 border rounded-xl cursor-pointer text-xs font-bold transition-all flex items-center gap-1.5 mx-auto ${
+                                isLightMode 
+                                  ? "bg-slate-50 border-slate-250 text-slate-700 hover:bg-slate-100 hover:text-slate-900" 
+                                  : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
+                              }`}
+                            >
+                              <Edit3 className="w-3.5 h-3.5" />
+                              <span>Edit Konten & Layout</span>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           )}
@@ -2180,6 +2341,169 @@ export default function DashboardPage() {
                 >
                   <CheckCircle className="w-4 h-4" />
                   <span>Simpan Foto Banner</span>
+                </button>
+              </form>
+            )}
+
+            {activeTab === "pages" && (
+              <form onSubmit={handlePageSubmit} className="space-y-4 animate-fade-in">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Nama Halaman</label>
+                  <input
+                    type="text"
+                    disabled
+                    value={pageTitle}
+                    className={`w-full text-xs font-bold rounded-xl p-3 ${
+                      isLightMode ? "bg-slate-100 border border-slate-200 text-slate-500 font-bold" : "bg-slate-900 border border-slate-800 text-slate-500 font-bold"
+                    }`}
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Pilih Template Layout</label>
+                  <select
+                    value={pageLayout}
+                    onChange={(e) => setPageLayout(e.target.value as "standard" | "split" | "grid")}
+                    className={`w-full text-xs font-bold rounded-xl p-3 focus:outline-none focus:border-emerald-500 cursor-pointer ${
+                      isLightMode ? "bg-slate-50 border border-slate-200 text-slate-850" : "bg-slate-900 border border-slate-800 text-white"
+                    }`}
+                  >
+                    <option value="split" className={isLightMode ? "text-slate-800" : "text-black"}>Template A: Foto di Kiri, Teks di Kanan (Split Layout)</option>
+                    <option value="standard" className={isLightMode ? "text-slate-800" : "text-black"}>Template B: Foto Banner di Atas, Teks di Bawah (Standard Layout)</option>
+                    <option value="grid" className={isLightMode ? "text-slate-800" : "text-black"}>Template C: Teks di Atas, Galeri 3 Foto Grid di Bawah (Grid Layout)</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Foto Utama Halaman (Folder)</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          setPageImage(reader.result as string);
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                    className={`w-full text-xs rounded-xl p-3 focus:outline-none focus:border-emerald-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-black file:bg-emerald-950 file:text-emerald-450 hover:file:bg-emerald-900 ${
+                      isLightMode ? "bg-slate-50 border border-slate-200 text-slate-800" : "bg-slate-900 border border-slate-800 text-white"
+                    }`}
+                  />
+                  {pageImage && (
+                    <div className="mt-2 w-16 h-10 rounded-xl overflow-hidden border border-slate-350/40">
+                      <img src={pageImage} alt="Main Preview" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Isi Konten Halaman (Teks / HTML)</label>
+                  <textarea
+                    rows={8}
+                    required
+                    placeholder="Masukkan teks konten halaman..."
+                    value={pageContent}
+                    onChange={(e) => setPageContent(e.target.value)}
+                    className={`w-full text-xs rounded-xl p-3 focus:outline-none focus:border-emerald-500 ${
+                      isLightMode ? "bg-slate-50 border border-slate-200 text-slate-800 font-medium" : "bg-slate-900 border border-slate-800 text-white font-medium"
+                    }`}
+                  />
+                  <p className={`text-[9px] font-bold ${isLightMode ? "text-slate-500" : "text-slate-450"}`}>
+                    Tip: Anda dapat menulis teks paragraf biasa, atau menyisipkan tag HTML dasar seperti &lt;p&gt;, &lt;h3&gt;, &lt;ul&gt;, &lt;li&gt; untuk memperindah tampilan isi halaman.
+                  </p>
+                </div>
+
+                {/* Additional inputs for Template C (Grid Layout) */}
+                {pageLayout === "grid" && (
+                  <div className={`border-t pt-4 space-y-4 ${isLightMode ? "border-slate-200" : "border-slate-850"}`}>
+                    <h4 className="text-[10px] font-black text-slate-450 uppercase tracking-wider">Foto Galeri Penunjang (Template C)</h4>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-[9px] font-bold text-slate-400 block">Foto Galeri 1</label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => setPageGridImage1(reader.result as string);
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          className={`w-full text-[10px] rounded-xl p-2 file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[10px] file:bg-emerald-950 file:text-emerald-450 ${
+                            isLightMode ? "bg-slate-50 border border-slate-200 text-slate-800" : "bg-slate-900 border border-slate-800 text-white"
+                          }`}
+                        />
+                        {pageGridImage1 && (
+                          <div className="mt-1 w-12 h-8 rounded-lg overflow-hidden border border-slate-350/40">
+                            <img src={pageGridImage1} alt="Grid 1 Preview" className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-[9px] font-bold text-slate-400 block">Foto Galeri 2</label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => setPageGridImage2(reader.result as string);
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          className={`w-full text-[10px] rounded-xl p-2 file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[10px] file:bg-emerald-950 file:text-emerald-450 ${
+                            isLightMode ? "bg-slate-50 border border-slate-200 text-slate-800" : "bg-slate-900 border border-slate-800 text-white"
+                          }`}
+                        />
+                        {pageGridImage2 && (
+                          <div className="mt-1 w-12 h-8 rounded-lg overflow-hidden border border-slate-350/40">
+                            <img src={pageGridImage2} alt="Grid 2 Preview" className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-[9px] font-bold text-slate-400 block">Foto Galeri 3</label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => setPageGridImage3(reader.result as string);
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                          className={`w-full text-[10px] rounded-xl p-2 file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[10px] file:bg-emerald-950 file:text-emerald-450 ${
+                            isLightMode ? "bg-slate-50 border border-slate-200 text-slate-800" : "bg-slate-900 border border-slate-800 text-white"
+                          }`}
+                        />
+                        {pageGridImage3 && (
+                          <div className="mt-1 w-12 h-8 rounded-lg overflow-hidden border border-slate-350/40">
+                            <img src={pageGridImage3} alt="Grid 3 Preview" className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl p-3.5 text-xs font-black tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  <span>Simpan Perubahan Halaman</span>
                 </button>
               </form>
             )}
