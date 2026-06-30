@@ -15,32 +15,24 @@ export default function CustomDynamicPage({ params }: { params: Promise<{ slug: 
 
   if (!page) {
     return (
-      <>
-        <Navbar />
-        <div className="w-full max-w-7xl mx-auto px-4 md:px-8 py-24 text-center">
-          <h3 className="text-xl font-black text-slate-800">Halaman Tidak Ditemukan</h3>
-          <p className="text-sm text-slate-400 mt-2">
-            Mohon maaf, halaman yang Anda cari tidak tersedia.
-          </p>
-        </div>
-        <Footer />
-      </>
+      <div className="w-full max-w-7xl mx-auto px-4 md:px-8 py-24 text-center">
+        <h3 className="text-xl font-black text-slate-800">Halaman Tidak Ditemukan</h3>
+        <p className="text-sm text-slate-400 mt-2">
+          Mohon maaf, halaman yang Anda cari tidak tersedia.
+        </p>
+      </div>
     );
   }
 
   return (
-    <>
-      <Navbar />
-      <StaticPageLayout
-        title={page.title}
-        menuGroup={page.menu_group}
-        layoutType={page.layout_type as any}
-        imageUrl={page.image_url}
-        gridImages={page.grid_images}
-      >
-        <div className="space-y-6" dangerouslySetInnerHTML={{ __html: page.content }} />
-      </StaticPageLayout>
-      <Footer />
-    </>
+    <StaticPageLayout
+      title={page.title}
+      menuGroup={page.menu_group}
+      layoutType={page.layout_type as any}
+      imageUrl={page.image_url}
+      gridImages={page.grid_images}
+    >
+      <div className="space-y-6" dangerouslySetInnerHTML={{ __html: page.content }} />
+    </StaticPageLayout>
   );
 }
