@@ -367,14 +367,16 @@ export default function Beranda() {
 
       {/* 3. TENTANG KAMI SECTION */}
       <section className="w-full max-w-7xl mx-auto px-4 md:px-8 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* Left: Meeting Room Image */}
-        <div className="relative w-full h-[320px] md:h-[400px] rounded-none overflow-hidden shadow-xl border border-slate-100 hover-lift">
-          <img
-            src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=80"
-            alt="Rapat Direksi RSKM"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-slate-950/20 to-transparent"></div>
+        {/* Left: Video Profile Embed */}
+        <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl border border-slate-150">
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src="https://www.youtube.com/embed/231xK3rXG9E"
+            title="Video Profil RSKM"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
         </div>
 
         {/* Right: Text Contents */}

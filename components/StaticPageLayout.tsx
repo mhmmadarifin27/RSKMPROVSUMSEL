@@ -76,19 +76,10 @@ export default function StaticPageLayout({
                 <div className="space-y-6" dangerouslySetInnerHTML={{ __html: dbPage.content }} />
               )}
               {(!hasDbContent || !dbPage || [
-                "renstra", 
-                "tentang-kami", 
-                "visi-misi", 
-                "struktur-organisasi", 
-                "jajaran-direksi", 
-                "aksesibilitas-rs", 
                 "dokter-kami", 
-                "jadwal-besuk", 
-                "syarat-pendaftaran-bpjs", 
-                "tarif-layanan", 
                 "tempat-tidur", 
-                "pelayanan-publik",
-                "rawat-inap"
+                "jajaran-direksi", 
+                "struktur-organisasi"
               ].includes(slug)) && (
                 <div className={hasDbContent && dbPage ? "mt-6 border-t border-slate-100 pt-6" : ""}>{children}</div>
               )}
@@ -127,19 +118,10 @@ export default function StaticPageLayout({
                   <div className="space-y-6" dangerouslySetInnerHTML={{ __html: dbPage.content }} />
                 )}
                 {(!hasDbContent || !dbPage || [
-                  "renstra", 
-                  "tentang-kami", 
-                  "visi-misi", 
-                  "struktur-organisasi", 
-                  "jajaran-direksi", 
-                  "aksesibilitas-rs", 
                   "dokter-kami", 
-                  "jadwal-besuk", 
-                  "syarat-pendaftaran-bpjs", 
-                  "tarif-layanan", 
                   "tempat-tidur", 
-                  "pelayanan-publik",
-                  "rawat-inap"
+                  "jajaran-direksi", 
+                  "struktur-organisasi"
                 ].includes(slug)) && (
                   <div className={hasDbContent && dbPage ? "mt-6 border-t border-slate-100 pt-6" : ""}>{children}</div>
                 )}
@@ -173,19 +155,10 @@ export default function StaticPageLayout({
                 <div className="space-y-6" dangerouslySetInnerHTML={{ __html: dbPage.content }} />
               )}
               {(!hasDbContent || !dbPage || [
-                "renstra", 
-                "tentang-kami", 
-                "visi-misi", 
-                "struktur-organisasi", 
-                "jajaran-direksi", 
-                "aksesibilitas-rs", 
                 "dokter-kami", 
-                "jadwal-besuk", 
-                "syarat-pendaftaran-bpjs", 
-                "tarif-layanan", 
                 "tempat-tidur", 
-                "pelayanan-publik",
-                "rawat-inap"
+                "jajaran-direksi", 
+                "struktur-organisasi"
               ].includes(slug)) && (
                 <div className={hasDbContent && dbPage ? "mt-6 border-t border-slate-100 pt-6" : ""}>{children}</div>
               )}
