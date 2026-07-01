@@ -41,6 +41,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHomepage]);
 
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (activeDropdown && !target.closest(".nav-dropdown-container")) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [activeDropdown]);
+
   // Filter pages by menu group and sort in exact requested order
   const profilOrder = [
     "renstra",
@@ -139,7 +150,7 @@ export default function Navbar() {
           </Link>
 
           {/* Profil Dropdown */}
-          <div className="relative">
+          <div className="relative nav-dropdown-container">
             <button
               onClick={() => toggleDropdown("profil")}
               className={`flex items-center gap-1 font-semibold text-sm transition-colors hover:text-primary cursor-pointer ${activeDropdown === "profil" || isGroupActive(profilPages)
@@ -168,7 +179,7 @@ export default function Navbar() {
           </div>
 
           {/* Pelayanan Dropdown (11 clinics + dynamic pages) */}
-          <div className="relative">
+          <div className="relative nav-dropdown-container">
             <button
               onClick={() => toggleDropdown("pelayanan")}
               className={`flex items-center gap-1 font-semibold text-sm transition-colors hover:text-primary cursor-pointer ${activeDropdown === "pelayanan" || pathname.startsWith("/pelayanan") || isGroupActive(pelayananPages)
@@ -219,7 +230,7 @@ export default function Navbar() {
           </div>
 
           {/* Info Pengunjung Dropdown */}
-          <div className="relative">
+          <div className="relative nav-dropdown-container">
             <button
               onClick={() => toggleDropdown("info")}
               className={`flex items-center gap-1 font-semibold text-sm transition-colors hover:text-primary cursor-pointer ${activeDropdown === "info" || isGroupActive(infoPages)
@@ -248,7 +259,7 @@ export default function Navbar() {
           </div>
 
           {/* Media Dropdown */}
-          <div className="relative">
+          <div className="relative nav-dropdown-container">
             <button
               onClick={() => toggleDropdown("media")}
               className={`flex items-center gap-1 font-semibold text-sm transition-colors hover:text-primary cursor-pointer ${activeDropdown === "media" || pathname === "/perpustakaan" || isGroupActive(mediaPages)
