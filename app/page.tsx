@@ -489,22 +489,22 @@ export default function Beranda() {
         </div>
 
         {isLoading ? (
-          /* Doctor Cards Loading Skeleton Marquee */
-          <div className="w-full overflow-x-auto scrollbar-none flex gap-6 py-4 px-8 select-none">
+          /* Loading Skeleton Marquee */
+          <div className="w-full overflow-x-auto scrollbar-none flex gap-6 py-4 px-8 select-none animate-pulse">
             {[1, 2, 3, 4].map((n) => (
               <div
                 key={n}
-                className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-xs flex flex-col justify-between w-72 h-[380px] shrink-0 animate-pulse"
+                className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-xs flex flex-col justify-between w-72 h-[380px] shrink-0"
               >
                 <div className="p-4 space-y-4">
-                  <div className="w-full h-48 rounded-2xl bg-slate-100" />
+                  <div className="w-full h-48 rounded-2xl bg-slate-200" />
                   <div className="space-y-2">
-                    <div className="h-4 bg-slate-200 rounded-md w-3/4" />
-                    <div className="h-3 bg-slate-200 rounded-md w-1/3" />
+                    <div className="h-4 bg-slate-200 rounded w-3/4 animate-pulse" />
+                    <div className="h-3 bg-slate-200 rounded w-1/2 animate-pulse" />
                   </div>
                 </div>
                 <div className="p-4 pt-0 border-t border-slate-50 mt-2">
-                  <div className="h-10 bg-slate-100 rounded-xl w-full" />
+                  <div className="h-10 bg-slate-100 rounded w-full animate-pulse" />
                 </div>
               </div>
             ))}
@@ -1032,15 +1032,21 @@ export default function Beranda() {
                   <span>Jadwal Pelayanan Rutin</span>
                 </h5>
                 
-                <div className="bg-slate-50 border border-slate-200 rounded-2xl divide-y divide-slate-150">
-                  {Object.entries(selectedDoctor.schedule).map(([days, hours]: any) => (
-                    <div key={days} className="p-3.5 flex justify-between items-center text-xs font-medium">
-                      <span className="text-slate-600 font-bold">{days}</span>
-                      <span className="text-primary font-extrabold bg-white border border-slate-200 px-2.5 py-1 rounded-lg">
-                        {hours}
-                      </span>
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl divide-y divide-slate-150 p-1">
+                  {selectedDoctor.schedule && typeof selectedDoctor.schedule === "object" ? (
+                    Object.entries(selectedDoctor.schedule).map(([days, hours]: any) => (
+                      <div key={days} className="p-3.5 flex justify-between items-center text-xs font-medium">
+                        <span className="text-slate-600 font-bold">{days}</span>
+                        <span className="text-primary font-extrabold bg-white border border-slate-200 px-2.5 py-1 rounded-lg">
+                          {hours}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-4 text-center text-xs font-semibold text-slate-500">
+                      {typeof selectedDoctor.schedule === "string" ? selectedDoctor.schedule : "Jadwal tidak tersedia"}
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
 
