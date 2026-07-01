@@ -66,7 +66,17 @@ export default function StaticPageLayout({
             {/* Display Cover Image if present */}
             {activeImageUrl && (
               <div className="w-full h-[300px] md:h-[450px] rounded-3xl overflow-hidden shadow-md border border-slate-150">
-                <img src={activeImageUrl} alt={title} className="w-full h-full object-cover" />
+                <img
+                  src={activeImageUrl}
+                  alt={title}
+                  className={`w-full h-full object-cover ${
+                    dbPage?.image_position === "top"
+                      ? "object-top"
+                      : dbPage?.image_position === "bottom"
+                      ? "object-bottom"
+                      : "object-center"
+                  }`}
+                />
               </div>
             )}
 
@@ -105,7 +115,13 @@ export default function StaticPageLayout({
                 <img
                   src={activeImageUrl || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=80"}
                   alt={title}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover ${
+                    dbPage?.image_position === "top"
+                      ? "object-top"
+                      : dbPage?.image_position === "bottom"
+                      ? "object-bottom"
+                      : "object-center"
+                  }`}
                 />
               </div>
             </div>
@@ -163,7 +179,17 @@ export default function StaticPageLayout({
             {/* Cover photo if uploaded */}
             {activeImageUrl && (
               <div className="w-full h-[300px] md:h-[420px] rounded-3xl overflow-hidden shadow-md border border-slate-150 max-w-5xl mx-auto">
-                <img src={activeImageUrl} alt={title} className="w-full h-full object-cover" />
+                <img
+                  src={activeImageUrl}
+                  alt={title}
+                  className={`w-full h-full object-cover ${
+                    dbPage?.image_position === "top"
+                      ? "object-top"
+                      : dbPage?.image_position === "bottom"
+                      ? "object-bottom"
+                      : "object-center"
+                  }`}
+                />
               </div>
             )}
 
