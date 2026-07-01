@@ -232,13 +232,7 @@ export default function Beranda() {
                   <img
                     src={slide.image_url}
                     alt={slide.title}
-                    className={`w-full h-full object-cover ${
-                      slide.image_position === "top"
-                        ? "object-top"
-                        : slide.image_position === "bottom"
-                        ? "object-bottom"
-                        : "object-center"
-                    }`}
+                    className="w-full h-full object-cover object-center"
                     loading={idx === 0 ? "eager" : "lazy"}
                     {...(idx === 0 ? { fetchPriority: "high" } : {})}
                   />
