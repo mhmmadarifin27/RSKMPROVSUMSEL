@@ -71,11 +71,26 @@ export default function StaticPageLayout({
             )}
 
             {/* Content Body */}
-            <div className="text-sm leading-relaxed text-slate-600 font-medium font-sans">
-              {hasDbContent && dbPage ? (
+            <div className="text-sm leading-relaxed text-slate-650 font-medium font-sans">
+              {hasDbContent && dbPage && (
                 <div className="space-y-6" dangerouslySetInnerHTML={{ __html: dbPage.content }} />
-              ) : (
-                children
+              )}
+              {(!hasDbContent || !dbPage || [
+                "renstra", 
+                "tentang-kami", 
+                "visi-misi", 
+                "struktur-organisasi", 
+                "jajaran-direksi", 
+                "aksesibilitas-rs", 
+                "dokter-kami", 
+                "jadwal-besuk", 
+                "syarat-pendaftaran-bpjs", 
+                "tarif-layanan", 
+                "tempat-tidur", 
+                "pelayanan-publik",
+                "rawat-inap"
+              ].includes(slug)) && (
+                <div className={hasDbContent && dbPage ? "mt-6 border-t border-slate-100 pt-6" : ""}>{children}</div>
               )}
             </div>
           </article>
@@ -107,11 +122,26 @@ export default function StaticPageLayout({
               </header>
 
               {/* Content Body */}
-              <div className="text-sm leading-relaxed text-slate-600 font-medium">
-                {hasDbContent && dbPage ? (
+              <div className="text-sm leading-relaxed text-slate-650 font-medium">
+                {hasDbContent && dbPage && (
                   <div className="space-y-6" dangerouslySetInnerHTML={{ __html: dbPage.content }} />
-                ) : (
-                  children
+                )}
+                {(!hasDbContent || !dbPage || [
+                  "renstra", 
+                  "tentang-kami", 
+                  "visi-misi", 
+                  "struktur-organisasi", 
+                  "jajaran-direksi", 
+                  "aksesibilitas-rs", 
+                  "dokter-kami", 
+                  "jadwal-besuk", 
+                  "syarat-pendaftaran-bpjs", 
+                  "tarif-layanan", 
+                  "tempat-tidur", 
+                  "pelayanan-publik",
+                  "rawat-inap"
+                ].includes(slug)) && (
+                  <div className={hasDbContent && dbPage ? "mt-6 border-t border-slate-100 pt-6" : ""}>{children}</div>
                 )}
               </div>
             </div>
@@ -138,11 +168,26 @@ export default function StaticPageLayout({
             )}
 
             {/* Description Text */}
-            <div className="max-w-3xl mx-auto text-sm text-slate-600 font-medium">
-              {hasDbContent && dbPage ? (
+            <div className="max-w-3xl mx-auto text-sm text-slate-650 font-medium">
+              {hasDbContent && dbPage && (
                 <div className="space-y-6" dangerouslySetInnerHTML={{ __html: dbPage.content }} />
-              ) : (
-                children
+              )}
+              {(!hasDbContent || !dbPage || [
+                "renstra", 
+                "tentang-kami", 
+                "visi-misi", 
+                "struktur-organisasi", 
+                "jajaran-direksi", 
+                "aksesibilitas-rs", 
+                "dokter-kami", 
+                "jadwal-besuk", 
+                "syarat-pendaftaran-bpjs", 
+                "tarif-layanan", 
+                "tempat-tidur", 
+                "pelayanan-publik",
+                "rawat-inap"
+              ].includes(slug)) && (
+                <div className={hasDbContent && dbPage ? "mt-6 border-t border-slate-100 pt-6" : ""}>{children}</div>
               )}
             </div>
 
