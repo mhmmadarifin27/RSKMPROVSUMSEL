@@ -232,7 +232,13 @@ export default function Beranda() {
                   <img
                     src={slide.image_url}
                     alt={slide.title}
-                    className="w-full h-full object-cover object-center"
+                    className={`w-full h-full object-cover ${
+                      slide.image_position === "top"
+                        ? "object-top"
+                        : slide.image_position === "bottom"
+                        ? "object-bottom"
+                        : "object-center"
+                    }`}
                     loading={idx === 0 ? "eager" : "lazy"}
                     {...(idx === 0 ? { fetchPriority: "high" } : {})}
                   />
@@ -265,8 +271,13 @@ export default function Beranda() {
             ))}
           </div>
         ) : (
-          <div className="w-full h-full bg-slate-900 flex items-center justify-center text-slate-400">
-            Memuat Hero...
+          <div className="w-full h-full bg-slate-950 flex items-center justify-center">
+            <div className="text-center space-y-3">
+              <div className="w-10 h-10 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+              <p className="text-[10px] tracking-widest uppercase font-black text-emerald-500/80 animate-pulse">
+                Melakukan Sinkronisasi Data...
+              </p>
+            </div>
           </div>
         )}
 

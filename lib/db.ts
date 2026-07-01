@@ -12,6 +12,7 @@ export interface PageData {
   image_url?: string; // Cover photo
   grid_images?: string[]; // Multiple photos for grid
   facilities_data?: { title: string; desc: string; icon: string }[]; // For facilities layout
+  image_position?: string;
 }
 
 export interface DoctorData {
@@ -58,6 +59,7 @@ export interface HeroSlideData {
   badge: string;
   image_url: string;
   order_index: number;
+  image_position?: string;
 }
 
 // ================= MOCK DATA INITIALIZATION =================
@@ -745,7 +747,8 @@ export async function savePage(page: Omit<PageData, "id"> & { id?: string }): Pr
     is_published: page.is_published,
     image_url: page.image_url || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=80",
     grid_images: page.grid_images,
-    facilities_data: page.facilities_data
+    facilities_data: page.facilities_data,
+    image_position: page.image_position
   };
 
   if (supabase) {

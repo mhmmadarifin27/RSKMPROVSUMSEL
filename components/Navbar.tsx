@@ -41,6 +41,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHomepage]);
 
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (activeDropdown && !target.closest(".relative")) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => document.removeEventListener("click", handleOutsideClick);
+  }, [activeDropdown]);
+
   // Filter pages by menu group and sort in exact requested order
   const profilOrder = [
     "renstra",
