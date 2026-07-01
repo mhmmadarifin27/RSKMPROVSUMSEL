@@ -49,6 +49,23 @@ export default function TentangKami() {
             Didukung oleh jajaran dokter spesialis dan subspesialis mata terbaik, RSKM Prov. Sumsel siap menjaga kesehatan mata Anda dan keluarga dengan layanan yang ramah, cepat, dan terjangkau.
           </p>
         </div>
+
+        <div className="border-t border-slate-150 pt-6 space-y-3">
+          <h3 className="text-lg font-black text-primary">Video Profil & Kunjungan RSKM</h3>
+          <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-md border border-slate-200">
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/231xK3rXG9E"
+              title="Video Profil RSKM"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+          <p className="text-[11px] text-slate-450 font-bold text-center">
+            Saksikan profil pelayanan kesehatan mata terpadu di RS Khusus Mata Provinsi Sumatera Selatan.
+          </p>
+        </div>
       </div>
     </StaticPageLayout>
   );

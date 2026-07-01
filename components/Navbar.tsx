@@ -109,17 +109,26 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   };
 
+  const isFloating = isScrolled || mobileMenuOpen;
+
   const headerPositionClass = isHomepage
     ? "fixed top-0 left-0 w-full"
     : "sticky top-0 w-full";
 
   return (
-    <header className={`${headerPositionClass} z-50 transition-all duration-300 border-b ${showSolid
-        ? "bg-white/95 backdrop-blur-md border-slate-100 shadow-xs text-slate-800"
-        : "bg-transparent border-transparent text-white"
-      }`}>
-      {/* Main Navbar */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+    <header className={`${headerPositionClass} z-50 w-full pointer-events-none flex justify-center bg-transparent`}>
+      {/* Main Navbar container */}
+      <div
+        className={`w-full flex items-center justify-between transition-all duration-500 ease-in-out pointer-events-auto ${
+          isFloating
+            ? "mt-3 w-[92%] max-w-5xl rounded-full bg-white/90 backdrop-blur-md border border-slate-200/50 shadow-lg px-6 py-2.5 text-slate-800"
+            : `px-4 md:px-8 py-4 border-b ${
+                isHomepage
+                  ? "bg-transparent border-transparent text-white"
+                  : "bg-white border-slate-100 text-slate-800"
+              }`
+        }`}
+      >
         {/* Hospital Brand Logo (Navigates to Dashboard) */}
         <Link href="/dashboard" onClick={closeAll} className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center p-0.5 shadow-md shadow-primary/10 border border-slate-100 group-hover:scale-105 transition-transform">
