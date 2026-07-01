@@ -17,6 +17,101 @@ import {
   ChevronRight,
   Bed,
 } from "lucide-react";
+import { Carousel as AppleCarousel, Card as AppleCard } from "@/components/ui/apple-cards-carousel";
+
+const appleCardsData = [
+  {
+    category: "Layanan Paripurna",
+    title: "Akreditasi Bintang Lima (KARS)",
+    src: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80",
+    content: (
+      <div className="space-y-4">
+        <p className="font-bold text-slate-800 text-lg">Komitmen Mutu & Keselamatan Pasien Tertinggi</p>
+        <p>
+          RS Khusus Mata Provinsi Sumatera Selatan "BINAR" telah secara konsisten mempertahankan predikat akreditasi Paripurna (Bintang Lima) dari Komite Akreditasi Rumah Sakit (KARS). Ini membuktikan bahwa setiap prosedur, pelayanan medis, dan manajemen keselamatan pasien di rumah sakit kami telah memenuhi standar tertinggi nasional.
+        </p>
+        <p>
+          Layanan kami meliputi sterilisasi peralatan bedah tingkat tinggi, manajemen risiko infeksi yang ketat, serta pengawasan klinis berkala oleh dewan komite medik untuk memastikan bahwa Anda mendapatkan perawatan mata yang paling aman.
+        </p>
+      </div>
+    )
+  },
+  {
+    category: "Tenaga Medis",
+    title: "Tim Dokter Spesialis & Subspesialis Mata",
+    src: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&auto=format&fit=crop&q=80",
+    content: (
+      <div className="space-y-4">
+        <p className="font-bold text-slate-800 text-lg">Keahlian Klinis Terintegrasi untuk Mata Anda</p>
+        <p>
+          Kami didukung oleh jajaran dokter spesialis dan subspesialis mata terbaik di Provinsi Sumatera Selatan. Tim medis kami memiliki kompetensi khusus di berbagai bidang seperti:
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong>Vitreoretina:</strong> Penanganan penyakit retina dan bedah vitreoretinal kompleks.</li>
+          <li><strong>Glaukoma:</strong> Diagnosis dini dan manajemen tekanan bola mata untuk mencegah kebutaan.</li>
+          <li><strong>Katarak & Bedah Refraktif:</strong> Operasi katarak modern tanpa jahitan dengan teknologi Phacoemulsification.</li>
+          <li><strong>Pediatric Ophthalmology & Strabismus:</strong> Perawatan kesehatan mata anak dan mata juling.</li>
+        </ul>
+        <p>
+          Dengan dedikasi tinggi, seluruh tim kami terus memperbarui keahlian mereka melalui riset medis dan konferensi internasional untuk memberikan terapi medis terkini.
+        </p>
+      </div>
+    )
+  },
+  {
+    category: "Teknologi",
+    title: "Peralatan Diagnostik & Bedah Modern",
+    src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop&q=80",
+    content: (
+      <div className="space-y-4">
+        <p className="font-bold text-slate-800 text-lg">Investasi pada Ketepatan Diagnosis & Kecepatan Pemulihan</p>
+        <p>
+          Teknology diagnostik dan prosedur bedah minimal invasif merupakan pilar penting di RSKM Sumsel. Kami menggunakan peralatan medis mutakhir untuk memberikan tingkat keberhasilan operasi yang optimal:
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong>Phacoemulsification System:</strong> Operasi katarak modern minimal invasif tanpa jahitan dan tanpa rasa sakit, selesai dalam waktu 15-20 menit.</li>
+          <li><strong>Optical Coherence Tomography (OCT):</strong> Pemindaian resolusi tinggi untuk mendeteksi gangguan saraf mata dan makula secara detail.</li>
+          <li><strong>Computerized Refractor:</strong> Pengukuran kelainan refraksi yang cepat dan akurat untuk pasien dewasa maupun anak-anak.</li>
+        </ul>
+      </div>
+    )
+  },
+  {
+    category: "Jaminan BPJS",
+    title: "Akses Pelayanan BPJS Kesehatan Penuh",
+    src: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop&q=80",
+    content: (
+      <div className="space-y-4">
+        <p className="font-bold text-slate-800 text-lg">Pelayanan Medis yang Terjangkau untuk Seluruh Masyarakat</p>
+        <p>
+          RSKM Prov. Sumsel melayani pasien jaminan BPJS Kesehatan secara penuh sesuai dengan regulasi sistem rujukan berjenjang. Kami berkomitmen untuk tidak membedakan kualitas pelayanan medis baik bagi pasien umum maupun pasien jaminan BPJS.
+        </p>
+        <p>
+          Untuk mendapatkan pelayanan BPJS, pastikan Anda membawa surat rujukan dari FKTP (Puskesmas atau Klinik Pratama) yang ditujukan ke RS Khusus Mata Provinsi Sumatera Selatan selaku Fasilitas Kesehatan Rujukan Tingkat Lanjutan (FKRTL) tipe B.
+        </p>
+      </div>
+    )
+  },
+  {
+    category: "Fasilitas Nyaman",
+    title: "Sarana Penunjang & Aksesibilitas Terbaik",
+    src: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=80",
+    content: (
+      <div className="space-y-4">
+        <p className="font-bold text-slate-800 text-lg">Lingkungan Perawatan yang Ramah dan Menenangkan</p>
+        <p>
+          Kenyamanan Anda selama menjalani perawatan medis adalah prioritas kami. Rumah sakit kami dirancang untuk memberikan kenyamanan fisik dan mental dengan menyediakan sarana prasarana yang lengkap:
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Ruang tunggu poliklinik yang luas, bersih, dan ber-AC nyaman.</li>
+          <li>Fasilitas perpustakaan publik untuk bahan bacaan pasien dan keluarga penunggu.</li>
+          <li>Aksesibilitas ramah disabilitas (guiding block, ram kursi roda, toilet disabilitas khusus).</li>
+          <li>Kapasitas tempat tidur rawat inap yang memadai serta terintegrasi secara real-time.</li>
+        </ul>
+      </div>
+    )
+  }
+];
 
 const faqData = [
   {
@@ -254,10 +349,10 @@ export default function Beranda() {
                   <div className="pt-2">
                     <Link
                       href="#tim-medis"
-                      className="bg-accent hover:bg-accent-hover text-slate-900 px-8 py-3.5 rounded-2xl text-xs font-black tracking-wider uppercase transition-all shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 flex items-center gap-2 max-w-max"
+                      className="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-850 px-6 py-3.5 rounded-xl text-xs font-bold transition-all duration-300 shadow-lg shadow-slate-950/10 hover:-translate-y-0.5"
                     >
-                      <span>Lihat Jadwal Dokter</span>
-                      <ArrowRight className="w-4 h-4 text-slate-900" />
+                      <span>Cari Jadwal Dokter</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-slate-800" />
                     </Link>
                   </div>
                 </div>
@@ -407,49 +502,23 @@ export default function Beranda() {
         </div>
       </section>
 
-      {/* 4. VALUE PROPOSITION SECTION ("STANDAR BARU PERAWATAN MATA") */}
-      <section className="w-full max-w-7xl mx-auto px-4 md:px-8 py-20 text-center space-y-12 border-t border-slate-100">
-        <div className="space-y-3 max-w-2xl mx-auto">
+      {/* 4. VALUE PROPOSITION SECTION ("STANDAR BARU PERAWATAN MATA" - APPLE CAROUSEL) */}
+      <section className="w-full py-20 border-t border-slate-100 bg-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-8 space-y-3">
           <div className="text-xs font-black text-primary tracking-widest uppercase">STANDAR BARU PERAWATAN MATA</div>
           <h3 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight leading-tight">
             Perawatan Mata Modern dengan Keunggulan Terintegrasi
           </h3>
-          <p className="text-xs text-slate-400 font-semibold">
-            Komitmen kami untuk memberikan layanan medis dengan kualitas hasil medis terbaik
+          <p className="text-xs text-slate-400 font-semibold max-w-xl mx-auto">
+            Komitmen kami untuk memberikan layanan medis terbaik dengan standar mutu pelayanan nasional dan internasional
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="p-8 bg-white border border-slate-100 rounded-3xl shadow-xs text-left space-y-4 hover-lift">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <h4 className="text-base font-black text-slate-800 tracking-tight">Perawatan Tepat, Seketika</h4>
-            <p className="text-xs text-slate-500 leading-relaxed font-medium">
-              Pemeriksaan yang cepat dan akurat menempatkan setiap pasien pada jalur yang benar, dengan janji temu dokter dalam waktu kurang dari sehari. Medis berkualitas tinggi didukung di setiap langkah.
-            </p>
-          </div>
-
-          <div className="p-8 bg-white border border-slate-100 rounded-3xl shadow-xs text-left space-y-4 hover-lift">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center">
-              <Microscope className="w-6 h-6" />
-            </div>
-            <h4 className="text-base font-black text-slate-800 tracking-tight">Teknologi yang Semakin Pintar</h4>
-            <p className="text-xs text-slate-500 leading-relaxed font-medium">
-              Sistem diagnostik terintegrasi menyajikan diagnosis yang akurat dengan cepat. Prosedur bedah mikroskopis minimal invansif menjamin pemulihan yang lebih cepat, aman, dan tanpa rasa sakit.
-            </p>
-          </div>
-
-          <div className="p-8 bg-white border border-slate-100 rounded-3xl shadow-xs text-left space-y-4 hover-lift">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center">
-              <TrendingUp className="w-6 h-6" />
-            </div>
-            <h4 className="text-base font-black text-slate-800 tracking-tight">Kemitraan Terbukti dalam Hasil</h4>
-            <p className="text-xs text-slate-500 leading-relaxed font-medium">
-              Kami memadukan keahlian klinis dengan biaya medis yang rasional. Dukungan penuh Satu Data Diskominfo menjamin transparansi informasi publik, kepatuhan, dan jaminan pelayanan KARS paripurna.
-            </p>
-          </div>
-        </div>
+        <AppleCarousel
+          items={appleCardsData.map((card, index) => (
+            <AppleCard key={index} card={card} index={index} />
+          ))}
+        />
       </section>
 
       {/* 5. TIM MEDIS AHLI KAMI SECTION (WITH AUTO-SCROLL CAROUSEL) */}

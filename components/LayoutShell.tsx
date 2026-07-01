@@ -12,13 +12,16 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
   const isDashboard = pathname ? pathname.startsWith("/dashboard") : false;
   const isLogin = pathname === "/login" || pathname === "/reset-password";
   const hideNavFooter = isDashboard || isLogin;
+  const isHomepage = pathname === "/";
 
   return (
     <AccessibilityProvider>
       <DataProvider>
         <div className="min-h-screen flex flex-col bg-white">
           {!hideNavFooter && <Navbar />}
-          <main className="flex-1 flex flex-col">{children}</main>
+          <main className={`flex-1 flex flex-col ${!isHomepage && !hideNavFooter ? "pt-20" : ""}`}>
+            {children}
+          </main>
           {!hideNavFooter && <Footer />}
         </div>
       </DataProvider>

@@ -26,8 +26,6 @@ export default function Navbar() {
   const showSolid = isScrolled || mobileMenuOpen || !isHomepage;
 
   useEffect(() => {
-    if (!isHomepage) return;
-
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setIsScrolled(true);
@@ -39,7 +37,7 @@ export default function Navbar() {
     handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomepage]);
+  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -111,9 +109,7 @@ export default function Navbar() {
 
   const isFloating = isScrolled || mobileMenuOpen;
 
-  const headerPositionClass = isHomepage
-    ? "fixed top-0 left-0 w-full"
-    : "sticky top-0 w-full";
+  const headerPositionClass = "fixed top-0 left-0 w-full";
 
   return (
     <header className={`${headerPositionClass} z-50 w-full pointer-events-none flex justify-center bg-transparent`}>
