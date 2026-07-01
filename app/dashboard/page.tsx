@@ -146,8 +146,6 @@ export default function DashboardPage() {
   const [pageGridImage1, setPageGridImage1] = useState("");
   const [pageGridImage2, setPageGridImage2] = useState("");
   const [pageGridImage3, setPageGridImage3] = useState("");
-  const [pageImagePosition, setPageImagePosition] = useState("center");
-  const [heroImagePosition, setHeroImagePosition] = useState("center");
 
   const [strukturImage, setStrukturImage] = useState("");
 
@@ -234,8 +232,6 @@ export default function DashboardPage() {
     setPageGridImage1("");
     setPageGridImage2("");
     setPageGridImage3("");
-    setPageImagePosition("center");
-    setHeroImagePosition("center");
   };
 
   // SUBMIT HANDLERS
@@ -414,7 +410,6 @@ export default function DashboardPage() {
         badge: heroBadge,
         image_url: heroImage || "https://images.unsplash.com/photo-1579684389782-64d84b5e901a?w=1600&auto=format&fit=crop&q=80",
         order_index: Number(heroOrder),
-        image_position: heroImagePosition
       };
       await createOrUpdateHeroSlide(payload);
       Swal.fire("Berhasil", "Foto hero banner berhasil disimpan", "success");
@@ -447,8 +442,7 @@ export default function DashboardPage() {
         content: pageContent,
         image_url: pageImage || "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=80",
         grid_images: gridImages,
-        is_published: true,
-        image_position: pageImagePosition
+        is_published: true
       };
       await createOrUpdatePage(payload);
       Swal.fire("Berhasil", "Halaman berhasil disimpan", "success");
@@ -560,7 +554,6 @@ export default function DashboardPage() {
     setHeroBadge(hero.badge);
     setHeroImage(hero.image_url);
     setHeroOrder(hero.order_index);
-    setHeroImagePosition(hero.image_position || "center");
     setIsModalOpen(true);
   };
 
@@ -573,7 +566,6 @@ export default function DashboardPage() {
     setPageLayout(page.layout_type);
     setPageContent(page.content);
     setPageImage(page.image_url || "");
-    setPageImagePosition(page.image_position || "center");
     
     const grids = page.grid_images || [];
     setPageGridImage1(grids[0] || "");
@@ -2379,24 +2371,6 @@ export default function DashboardPage() {
                     </div>
                   )}
                 </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Penjajaran Gambar Banner (Wallpaper Align)</label>
-                  <select
-                    value={heroImagePosition}
-                    onChange={(e) => setHeroImagePosition(e.target.value)}
-                    className={`w-full text-xs font-bold rounded-xl p-3 focus:outline-none focus:border-emerald-500 cursor-pointer ${
-                      isLightMode ? "bg-slate-50 border border-slate-200 text-slate-855" : "bg-slate-900 border border-slate-800 text-white"
-                    }`}
-                  >
-                    <option value="center" className={isLightMode ? "text-slate-850" : "text-black"}>Tengah (Center - Default)</option>
-                    <option value="top" className={isLightMode ? "text-slate-855" : "text-black"}>Atas (Top - Menjaga bagian atas tetap terlihat)</option>
-                    <option value="bottom" className={isLightMode ? "text-slate-855" : "text-black"}>Bawah (Bottom - Menjaga bagian bawah tetap terlihat)</option>
-                  </select>
-                  <p className={`text-[9px] font-bold ${isLightMode ? "text-slate-500" : "text-slate-450"}`}>
-                    Mengatur pemotongan vertikal gambar agar teks di banner selalu terbaca di layar HP maupun laptop.
-                  </p>
-                </div>
                 <button
                   type="submit"
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl p-3.5 text-xs font-black tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer shadow-md"
@@ -2525,24 +2499,6 @@ export default function DashboardPage() {
                       <img src={pageImage} alt="Main Preview" className="w-full h-full object-cover" />
                     </div>
                   )}
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Penjajaran Gambar Utama (Wallpaper Align)</label>
-                  <select
-                    value={pageImagePosition}
-                    onChange={(e) => setPageImagePosition(e.target.value)}
-                    className={`w-full text-xs font-bold rounded-xl p-3 focus:outline-none focus:border-emerald-500 cursor-pointer ${
-                      isLightMode ? "bg-slate-50 border border-slate-200 text-slate-850" : "bg-slate-900 border border-slate-800 text-white"
-                    }`}
-                  >
-                    <option value="center" className={isLightMode ? "text-slate-850" : "text-black"}>Tengah (Center - Default)</option>
-                    <option value="top" className={isLightMode ? "text-slate-855" : "text-black"}>Atas (Top - Menjaga bagian atas tetap terlihat)</option>
-                    <option value="bottom" className={isLightMode ? "text-slate-855" : "text-black"}>Bawah (Bottom - Menjaga bagian bawah tetap terlihat)</option>
-                  </select>
-                  <p className={`text-[9px] font-bold ${isLightMode ? "text-slate-500" : "text-slate-450"}`}>
-                    Mengatur fokus pemotongan vertikal gambar agar pas saat disesuaikan di layar laptop maupun layar HP.
-                  </p>
                 </div>
 
                 <div className="space-y-1.5">

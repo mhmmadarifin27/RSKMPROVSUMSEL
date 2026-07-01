@@ -99,7 +99,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [doctors, setDoctors] = useState<DoctorData[]>([]);
   const [posts, setPosts] = useState<PostData[]>([]);
   const [beds, setBeds] = useState<BedData[]>([]);
-  const [heroSlides, setHeroSlides] = useState<HeroSlideData[]>([]);
+  const [heroSlides, setHeroSlides] = useState<HeroSlideData[]>(defaultHeroSlides);
   const [directors, setDirectors] = useState<DirectorData[]>([]);
   const [libraryItems, setLibraryItems] = useState<LibraryItem[]>([]);
   const [feedbackMessages, setFeedbackMessages] = useState<FeedbackMessage[]>([]);
