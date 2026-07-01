@@ -42,7 +42,7 @@ const faqData = [
 ];
 
 export default function Beranda() {
-  const { doctors, clinics, posts, heroSlides } = useData();
+  const { doctors, clinics, posts, heroSlides, isLoading } = useData();
 
   // Hero Carousel State
   const [activeSlide, setActiveSlide] = useState(0);
@@ -488,7 +488,28 @@ export default function Beranda() {
           )}
         </div>
 
-        {displayedDoctors.length === 0 ? (
+        {isLoading ? (
+          /* Doctor Cards Loading Skeleton Marquee */
+          <div className="w-full overflow-x-auto scrollbar-none flex gap-6 py-4 px-8 select-none">
+            {[1, 2, 3, 4].map((n) => (
+              <div
+                key={n}
+                className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-xs flex flex-col justify-between w-72 h-[380px] shrink-0 animate-pulse"
+              >
+                <div className="p-4 space-y-4">
+                  <div className="w-full h-48 rounded-2xl bg-slate-100" />
+                  <div className="space-y-2">
+                    <div className="h-4 bg-slate-200 rounded-md w-3/4" />
+                    <div className="h-3 bg-slate-200 rounded-md w-1/3" />
+                  </div>
+                </div>
+                <div className="p-4 pt-0 border-t border-slate-50 mt-2">
+                  <div className="h-10 bg-slate-100 rounded-xl w-full" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : displayedDoctors.length === 0 ? (
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="w-full bg-white rounded-3xl p-12 text-center border border-slate-100 shadow-xs">
               <div className="w-16 h-16 bg-slate-100 text-slate-400 flex items-center justify-center rounded-full mx-auto mb-4">

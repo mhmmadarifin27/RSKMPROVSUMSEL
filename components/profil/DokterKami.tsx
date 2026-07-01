@@ -5,7 +5,7 @@ import { useData } from "@/app/context/DataContext";
 import StaticPageLayout from "../StaticPageLayout";
 
 export default function DokterKami() {
-  const { doctors } = useData();
+  const { doctors, isLoading } = useData();
 
   return (
     <StaticPageLayout
@@ -37,35 +37,56 @@ export default function DokterKami() {
 
         <div>
           <h3 className="text-lg font-black text-slate-800 mb-4 text-center">Jadwal Praktek Dokter Spesialis Mata</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
-            {doctors.map((doc) => (
-              <div key={doc.id} className="bg-white border border-slate-200 rounded-3xl p-5 shadow-xs flex flex-col justify-between hover-lift">
-                <div className="space-y-4">
-                  <div className="w-full h-48 rounded-2xl bg-slate-50 overflow-hidden border border-slate-200 relative">
-                    <img src={doc.image_url} alt={doc.name} className="w-full h-full object-cover object-top" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-black text-slate-800 leading-tight">{doc.name}</h4>
-                    <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md inline-block mt-1">
-                      {doc.specialization}
-                    </span>
-                  </div>
-                  
-                  <div className="space-y-2 border-t border-slate-100 pt-3">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Jadwal Praktek</span>
-                    <div className="space-y-1 bg-slate-50 rounded-xl p-2.5">
-                      {Object.entries(doc.schedule).map(([days, hours]: any) => (
-                        <div key={days} className="flex justify-between text-[11px] font-semibold text-slate-600">
-                          <span>{days}</span>
-                          <span className="text-primary font-mono">{hours}</span>
-                        </div>
-                      ))}
+          
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4 animate-pulse">
+              {[1, 2, 3].map((n) => (
+                <div key={n} className="bg-white border border-slate-200 rounded-3xl p-5 shadow-xs flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <div className="w-full h-48 rounded-2xl bg-slate-100" />
+                    <div className="space-y-2">
+                      <div className="h-4 bg-slate-200 rounded-md w-3/4" />
+                      <div className="h-3 bg-slate-200 rounded-md w-1/3" />
+                    </div>
+                    <div className="space-y-2 border-t border-slate-100 pt-3">
+                      <div className="h-3 bg-slate-200 rounded-md w-1/4" />
+                      <div className="h-10 bg-slate-50 rounded-xl w-full" />
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+              {doctors.map((doc) => (
+                <div key={doc.id} className="bg-white border border-slate-200 rounded-3xl p-5 shadow-xs flex flex-col justify-between hover-lift">
+                  <div className="space-y-4">
+                    <div className="w-full h-48 rounded-2xl bg-slate-50 overflow-hidden border border-slate-200 relative">
+                      <img src={doc.image_url} alt={doc.name} className="w-full h-full object-cover object-top" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-black text-slate-800 leading-tight">{doc.name}</h4>
+                      <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md inline-block mt-1">
+                        {doc.specialization}
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-2 border-t border-slate-100 pt-3">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Jadwal Praktek</span>
+                      <div className="space-y-1 bg-slate-50 rounded-xl p-2.5">
+                        {Object.entries(doc.schedule).map(([days, hours]: any) => (
+                          <div key={days} className="flex justify-between text-[11px] font-semibold text-slate-600">
+                            <span>{days}</span>
+                            <span className="text-primary font-mono">{hours}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </StaticPageLayout>
