@@ -117,7 +117,7 @@ export default function Navbar() {
       <div
         className={`w-full flex items-center justify-between transition-all duration-500 ease-in-out pointer-events-auto ${
           isFloating
-            ? "mt-3 w-[92%] max-w-5xl rounded-full bg-white/90 backdrop-blur-md border border-slate-200/50 shadow-lg px-6 py-2.5 text-slate-800"
+            ? "mt-3 w-[95%] max-w-6.5xl rounded-full bg-white/90 backdrop-blur-md border border-slate-200/50 shadow-lg px-8 py-2.5 text-slate-800"
             : `px-4 md:px-8 py-4 border-b ${
                 isHomepage
                   ? "bg-transparent border-transparent text-white"

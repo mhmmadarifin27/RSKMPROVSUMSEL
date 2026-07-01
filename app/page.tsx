@@ -18,6 +18,7 @@ import {
   Bed,
 } from "lucide-react";
 import { Carousel as AppleCarousel, Card as AppleCard } from "@/components/ui/apple-cards-carousel";
+import { AnimatePresence, motion } from "framer-motion";
 
 const appleCardsData = [
   {
@@ -156,6 +157,9 @@ export default function Beranda() {
 
   // FAQ Accordion State
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  // Video Modal State
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   // Marquee Refs and Hover States
   const clinicsMarqueeRef = useRef<HTMLDivElement>(null);
@@ -346,14 +350,22 @@ export default function Beranda() {
                     {slide.subtitle}
                   </p>
 
-                  <div className="pt-2">
+                  <div className="flex flex-wrap items-center gap-4 pt-2">
                     <Link
                       href="#tim-medis"
-                      className="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-850 px-6 py-3.5 rounded-xl text-xs font-bold transition-all duration-300 shadow-lg shadow-slate-950/10 hover:-translate-y-0.5"
+                      className="bg-primary hover:bg-emerald-700 text-white px-8 py-3.5 rounded-2xl text-xs font-black tracking-wider uppercase transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 flex items-center gap-2 max-w-max"
                     >
-                      <span>Cari Jadwal Dokter</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-800" />
+                      <span>Lihat Jadwal Dokter</span>
+                      <ArrowRight className="w-4 h-4 text-white" />
                     </Link>
+
+                    <button
+                      onClick={() => setIsVideoOpen(true)}
+                      className="bg-white hover:bg-slate-100 text-primary border border-slate-200/60 px-8 py-3.5 rounded-2xl text-xs font-black tracking-wider uppercase transition-all shadow-md hover:shadow-lg flex items-center gap-2 max-w-max cursor-pointer"
+                    >
+                      <span>Video Profil RS</span>
+                      <ArrowRight className="w-4 h-4 text-primary" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -503,14 +515,15 @@ export default function Beranda() {
       </section>
 
       {/* 4. VALUE PROPOSITION SECTION ("STANDAR BARU PERAWATAN MATA" - APPLE CAROUSEL) */}
-      <section className="w-full py-20 border-t border-slate-100 bg-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 text-center mb-8 space-y-3">
-          <div className="text-xs font-black text-primary tracking-widest uppercase">STANDAR BARU PERAWATAN MATA</div>
-          <h3 className="text-2xl md:text-3xl font-black text-slate-800 tracking-tight leading-tight">
-            Perawatan Mata Modern dengan Keunggulan Terintegrasi
+      <section className="w-full py-20 border-t border-slate-100 bg-white font-sans">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 mb-8 space-y-2 text-left">
+          <div className="text-xs font-black text-primary tracking-widest uppercase">MUTU & LAYANAN</div>
+          <h3 className="text-3xl md:text-5xl font-black text-slate-800 tracking-tight leading-tight max-w-4xl">
+            Perawatan Mata Modern. <br />
+            <span className="text-slate-400">Keunggulan Klinis Terintegrasi.</span>
           </h3>
-          <p className="text-xs text-slate-400 font-semibold max-w-xl mx-auto">
-            Komitmen kami untuk memberikan layanan medis terbaik dengan standar mutu pelayanan nasional dan internasional
+          <p className="text-sm text-slate-500 font-semibold max-w-2xl pt-2 leading-relaxed">
+            Kami berkomitmen memberikan pelayanan kesehatan mata paripurna berstandar nasional dan internasional demi memulihkan penglihatan Anda.
           </p>
         </div>
 
@@ -1136,6 +1149,42 @@ export default function Beranda() {
         </div>
       )}
 
+
+      {/* Video Modal Popup */}
+      <AnimatePresence>
+        {isVideoOpen && (
+          <div className="fixed inset-0 h-screen z-55 overflow-auto bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-slate-950/40 cursor-pointer"
+              onClick={() => setIsVideoOpen(false)}
+            />
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white max-w-4xl w-full rounded-3xl overflow-hidden shadow-2xl relative aspect-video z-10 border border-slate-100"
+            >
+              <button
+                onClick={() => setIsVideoOpen(false)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors cursor-pointer z-10"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/231xK3rXG9E?autoplay=1"
+                title="Video Profil RSKM"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
