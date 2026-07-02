@@ -16,99 +16,104 @@ import {
   ChevronLeft,
   ChevronRight,
   Bed,
+  Phone,
 } from "lucide-react";
-import { Carousel as AppleCarousel, Card as AppleCard } from "@/components/ui/apple-cards-carousel";
 import { AnimatePresence, motion } from "framer-motion";
 
-const appleCardsData = [
+const servicesData = [
   {
-    category: "Layanan Paripurna",
-    title: "Akreditasi Bintang Lima (KARS)",
+    number: "01",
+    category: "Poliklinik Utama",
+    title: "Katarak & Bedah Refraktif",
     src: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80",
     content: (
       <div className="space-y-4">
-        <p className="font-bold text-slate-800 text-lg">Komitmen Mutu & Keselamatan Pasien Tertinggi</p>
+        <p className="font-bold text-slate-800 text-lg">Poliklinik Katarak & Bedah Refraktif</p>
         <p>
-          RS Khusus Mata Provinsi Sumatera Selatan "BINAR" telah secara konsisten mempertahankan predikat akreditasi Paripurna (Bintang Lima) dari Komite Akreditasi Rumah Sakit (KARS). Ini membuktikan bahwa setiap prosedur, pelayanan medis, dan manajemen keselamatan pasien di rumah sakit kami telah memenuhi standar tertinggi nasional.
+          RS Khusus Mata Provinsi Sumatera Selatan didukung oleh teknologi operasi katarak termodern Phacoemulsification. Prosedur minimal invasif ini memungkinkan pengangkatan katarak tanpa jahitan, tanpa rasa sakit, dan pemulihan penglihatan berjalan dengan sangat cepat.
         </p>
         <p>
-          Layanan kami meliputi sterilisasi peralatan bedah tingkat tinggi, manajemen risiko infeksi yang ketat, serta pengawasan klinis berkala oleh dewan komite medik untuk memastikan bahwa Anda mendapatkan perawatan mata yang paling aman.
+          Layanan ini ditujukan bagi pasien mandiri maupun jaminan BPJS Kesehatan secara penuh dengan komitmen mutu keselamatan pasien terbaik.
         </p>
       </div>
     )
   },
   {
-    category: "Tenaga Medis",
-    title: "Tim Dokter Spesialis & Subspesialis Mata",
+    number: "02",
+    category: "Retina",
+    title: "Poliklinik Vitreoretina",
     src: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&auto=format&fit=crop&q=80",
     content: (
       <div className="space-y-4">
-        <p className="font-bold text-slate-800 text-lg">Keahlian Klinis Terintegrasi untuk Mata Anda</p>
+        <p className="font-bold text-slate-800 text-lg">Pusat Diagnosis & Terapi Retinopati</p>
         <p>
-          Kami didukung oleh jajaran dokter spesialis dan subspesialis mata terbaik di Provinsi Sumatera Selatan. Tim medis kami memiliki kompetensi khusus di berbagai bidang seperti:
+          Layanan Poliklinik Vitreoretina menangani berbagai kelainan pada segmen posterior bola mata, termasuk ablasi retina, retinopati diabetik, perdarahan vitreous, dan degenerasi makula terkait usia (AMD).
         </p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li><strong>Vitreoretina:</strong> Penanganan penyakit retina dan bedah vitreoretinal kompleks.</li>
-          <li><strong>Glaukoma:</strong> Diagnosis dini dan manajemen tekanan bola mata untuk mencegah kebutaan.</li>
-          <li><strong>Katarak & Bedah Refraktif:</strong> Operasi katarak modern tanpa jahitan dengan teknologi Phacoemulsification.</li>
-          <li><strong>Pediatric Ophthalmology & Strabismus:</strong> Perawatan kesehatan mata anak dan mata juling.</li>
-        </ul>
         <p>
-          Dengan dedikasi tinggi, seluruh tim kami terus memperbarui keahlian mereka melalui riset medis dan konferensi internasional untuk memberikan terapi medis terkini.
+          Dilengkapi dengan teknologi Laser Retina, Optical Coherence Tomography (OCT), dan USG Mata resolusi tinggi untuk memantau kondisi makula dan saraf mata pasien secara detail.
         </p>
       </div>
     )
   },
   {
-    category: "Teknologi",
-    title: "Peralatan Diagnostik & Bedah Modern",
-    src: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop&q=80",
+    number: "03",
+    category: "Glaukoma",
+    title: "Poliklinik Glaukoma",
+    src: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=800&auto=format&fit=crop&q=80",
     content: (
       <div className="space-y-4">
-        <p className="font-bold text-slate-800 text-lg">Investasi pada Ketepatan Diagnosis & Kecepatan Pemulihan</p>
+        <p className="font-bold text-slate-800 text-lg">Pencegahan Kerusakan Saraf Mata Akibat Glaukoma</p>
         <p>
-          Teknology diagnostik dan prosedur bedah minimal invasif merupakan pilar penting di RSKM Sumsel. Kami menggunakan peralatan medis mutakhir untuk memberikan tingkat keberhasilan operasi yang optimal:
+          Glaukoma merupakan penyebab kebutaan permanen kedua terbesar. Layanan kami menyediakan pemeriksaan tekanan intraokular (Tonometer), pemeriksaan lapang pandang (Perimetri Humphrey), dan terapi laser/bedah filtrasi (trabekulektomi) untuk menjaga sisa penglihatan Anda.
         </p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li><strong>Phacoemulsification System:</strong> Operasi katarak modern minimal invasif tanpa jahitan dan tanpa rasa sakit, selesai dalam waktu 15-20 menit.</li>
-          <li><strong>Optical Coherence Tomography (OCT):</strong> Pemindaian resolusi tinggi untuk mendeteksi gangguan saraf mata dan makula secara detail.</li>
-          <li><strong>Computerized Refractor:</strong> Pengukuran kelainan refraksi yang cepat dan akurat untuk pasien dewasa maupun anak-anak.</li>
-        </ul>
       </div>
     )
   },
   {
-    category: "Jaminan BPJS",
-    title: "Akses Pelayanan BPJS Kesehatan Penuh",
+    number: "04",
+    category: "Pediatri",
+    title: "Mata Anak & Strabismus",
     src: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop&q=80",
     content: (
       <div className="space-y-4">
-        <p className="font-bold text-slate-800 text-lg">Pelayanan Medis yang Terjangkau untuk Seluruh Masyarakat</p>
+        <p className="font-bold text-slate-800 text-lg">Pelayanan Kesehatan Mata Anak & Koreksi Juling</p>
         <p>
-          RSKM Prov. Sumsel melayani pasien jaminan BPJS Kesehatan secara penuh sesuai dengan regulasi sistem rujukan berjenjang. Kami berkomitmen untuk tidak membedakan kualitas pelayanan medis baik bagi pasien umum maupun pasien jaminan BPJS.
-        </p>
-        <p>
-          Untuk mendapatkan pelayanan BPJS, pastikan Anda membawa surat rujukan dari FKTP (Puskesmas atau Klinik Pratama) yang ditujukan ke RS Khusus Mata Provinsi Sumatera Selatan selaku Fasilitas Kesehatan Rujukan Tingkat Lanjutan (FKRTL) tipe B.
+          Kesehatan mata anak membutuhkan pendekatan khusus dan ramah anak. Kami mendiagnosis gangguan refraksi (mata minus/plus/silinder) pada anak, mata malas (ambliopia), serta tindakan bedah rekonstruktif untuk koreksi juling (strabismus).
         </p>
       </div>
     )
   },
   {
-    category: "Fasilitas Nyaman",
-    title: "Sarana Penunjang & Aksesibilitas Terbaik",
+    number: "05",
+    category: "Emergency",
+    title: "UGD Mata 24 Jam",
+    src: "https://images.unsplash.com/photo-1583947581924-860bda6a26df?w=800&auto=format&fit=crop&q=80",
+    content: (
+      <div className="space-y-4">
+        <p className="font-bold text-slate-800 text-lg">Unit Gawat Darurat Khusus Cedera & Infeksi Mata</p>
+        <p>
+          UGD Mata kami siap melayani 24 jam penuh untuk penanganan trauma/kecelakaan mata, kemasukan benda asing (corpus alienum), luka bakar kimia pada mata, infeksi akut, atau penurunan penglihatan mendadak.
+        </p>
+        <p>
+          Didukung oleh tim perawat terlatih dan dokter spesialis mata on-call yang siap melakukan tindakan penyelamatan darurat.
+        </p>
+      </div>
+    )
+  },
+  {
+    number: "06",
+    category: "Rawat Inap",
+    title: "Pelayanan Rawat Inap",
     src: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&auto=format&fit=crop&q=80",
     content: (
       <div className="space-y-4">
-        <p className="font-bold text-slate-800 text-lg">Lingkungan Perawatan yang Ramah dan Menenangkan</p>
+        <p className="font-bold text-slate-800 text-lg">Kenyamanan Perawatan & Monitoring Bed Real-time</p>
         <p>
-          Kenyamanan Anda selama menjalani perawatan medis adalah prioritas kami. Rumah sakit kami dirancang untuk memberikan kenyamanan fisik dan mental dengan menyediakan sarana prasarana yang lengkap:
+          Bagi pasien pasca-operasi besar maupun perawatan medis intensif, kami menyediakan fasilitas kamar rawat inap yang tenang, bersih, dan berstandar pelayanan KARS paripurna.
         </p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Ruang tunggu poliklinik yang luas, bersih, dan ber-AC nyaman.</li>
-          <li>Fasilitas perpustakaan publik untuk bahan bacaan pasien dan keluarga penunggu.</li>
-          <li>Aksesibilitas ramah disabilitas (guiding block, ram kursi roda, toilet disabilitas khusus).</li>
-          <li>Kapasitas tempat tidur rawat inap yang memadai serta terintegrasi secara real-time.</li>
-        </ul>
+        <p>
+          Kapasitas ketersediaan bed juga terintegrasi secara real-time melalui dashboard informasi Satu Data Diskominfo Sumsel.
+        </p>
       </div>
     )
   }
@@ -160,6 +165,9 @@ export default function Beranda() {
 
   // Video Modal State
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+
+  // Service Card Modal State
+  const [selectedService, setSelectedService] = useState<any | null>(null);
 
   // Marquee Refs and Hover States
   const clinicsMarqueeRef = useRef<HTMLDivElement>(null);
@@ -514,24 +522,185 @@ export default function Beranda() {
         </div>
       </section>
 
-      {/* 4. VALUE PROPOSITION SECTION ("STANDAR BARU PERAWATAN MATA" - APPLE CAROUSEL) */}
-      <section className="w-full py-20 border-t border-slate-100 bg-white font-sans">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 mb-8 space-y-2 text-left">
-          <div className="text-xs font-black text-primary tracking-widest uppercase">MUTU & LAYANAN</div>
-          <h3 className="text-3xl md:text-5xl font-black text-slate-800 tracking-tight leading-tight max-w-4xl">
-            Perawatan Mata Modern. <br />
-            <span className="text-slate-400">Keunggulan Klinis Terintegrasi.</span>
-          </h3>
-          <p className="text-sm text-slate-500 font-semibold max-w-2xl pt-2 leading-relaxed">
-            Kami berkomitmen memberikan pelayanan kesehatan mata paripurna berstandar nasional dan internasional demi memulihkan penglihatan Anda.
-          </p>
-        </div>
+      {/* 4. VALUE PROPOSITION SECTION ("MUTU & LAYANAN" - GRID SERVICES CUSTOM LAYOUT) */}
+      <section className="w-full py-20 border-t border-slate-100 bg-[#fafafa] font-sans">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-0 border border-slate-200/80 rounded-3xl overflow-hidden shadow-xl bg-white">
+            {/* 1. Header Card (Spans Col 1-2) */}
+            <div className="md:col-span-2 p-8 md:p-12 flex items-center justify-between border-b md:border-r border-slate-150">
+              <div className="space-y-4 max-w-md">
+                <span className="text-xs font-black text-primary tracking-widest uppercase">MUTU & LAYANAN</span>
+                <h3 className="text-2xl md:text-3.5xl font-black text-slate-800 tracking-tight leading-tight">
+                  Perawatan Mata Modern. <br />
+                  <span className="text-slate-400">Keunggulan Klinis Terintegrasi.</span>
+                </h3>
+                <p className="text-xs md:text-sm text-slate-500 font-semibold leading-relaxed">
+                  Kami berkomitmen memberikan pelayanan kesehatan mata paripurna berstandar nasional dan internasional demi memulihkan penglihatan Anda.
+                </p>
+              </div>
+              {/* Decorative Dots Grid (Matches Example image) */}
+              <div className="hidden lg:flex flex-col gap-2 opacity-35 mr-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="flex gap-2">
+                    {[...Array(3)].map((_, j) => (
+                      <div key={j} className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
 
-        <AppleCarousel
-          items={appleCardsData.map((card, index) => (
-            <AppleCard key={index} card={card} index={index} />
-          ))}
-        />
+            {/* 2. Service Card 01 */}
+            <div className="md:col-span-1 h-[240px] md:h-auto border-b md:border-r border-slate-150 relative overflow-hidden group">
+              <div
+                onClick={() => setSelectedService(servicesData[0])}
+                className="relative w-full h-full cursor-pointer overflow-hidden flex flex-col justify-end p-8"
+              >
+                <img
+                  src={servicesData[0].src}
+                  alt={servicesData[0].title}
+                  className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-slate-950/60 group-hover:bg-slate-950/50 transition-colors duration-300" />
+                <div className="relative z-10 text-white space-y-2">
+                  <span className="block text-[10px] font-black text-white/70 tracking-widest uppercase">
+                    {servicesData[0].number}
+                  </span>
+                  <h4 className="text-base font-black leading-tight text-white drop-shadow-sm group-hover:underline">
+                    {servicesData[0].title}
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Service Card 02 */}
+            <div className="md:col-span-1 h-[240px] md:h-auto border-b border-slate-150 relative overflow-hidden group">
+              <div
+                onClick={() => setSelectedService(servicesData[1])}
+                className="relative w-full h-full cursor-pointer overflow-hidden flex flex-col justify-end p-8"
+              >
+                <img
+                  src={servicesData[1].src}
+                  alt={servicesData[1].title}
+                  className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-slate-950/60 group-hover:bg-slate-950/50 transition-colors duration-300" />
+                <div className="relative z-10 text-white space-y-2">
+                  <span className="block text-[10px] font-black text-white/70 tracking-widest uppercase">
+                    {servicesData[1].number}
+                  </span>
+                  <h4 className="text-base font-black leading-tight text-white drop-shadow-sm group-hover:underline">
+                    {servicesData[1].title}
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Service Card 03 */}
+            <div className="md:col-span-1 h-[240px] border-b md:border-r border-slate-150 relative overflow-hidden group">
+              <div
+                onClick={() => setSelectedService(servicesData[2])}
+                className="relative w-full h-full cursor-pointer overflow-hidden flex flex-col justify-end p-8"
+              >
+                <img
+                  src={servicesData[2].src}
+                  alt={servicesData[2].title}
+                  className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-slate-950/60 group-hover:bg-slate-950/50 transition-colors duration-300" />
+                <div className="relative z-10 text-white space-y-2">
+                  <span className="block text-[10px] font-black text-white/70 tracking-widest uppercase">
+                    {servicesData[2].number}
+                  </span>
+                  <h4 className="text-base font-black leading-tight text-white drop-shadow-sm group-hover:underline">
+                    {servicesData[2].title}
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            {/* 5. Service Card 04 */}
+            <div className="md:col-span-1 h-[240px] border-b md:border-r border-slate-150 relative overflow-hidden group">
+              <div
+                onClick={() => setSelectedService(servicesData[3])}
+                className="relative w-full h-full cursor-pointer overflow-hidden flex flex-col justify-end p-8"
+              >
+                <img
+                  src={servicesData[3].src}
+                  alt={servicesData[3].title}
+                  className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-slate-950/60 group-hover:bg-slate-950/50 transition-colors duration-300" />
+                <div className="relative z-10 text-white space-y-2">
+                  <span className="block text-[10px] font-black text-white/70 tracking-widest uppercase">
+                    {servicesData[3].number}
+                  </span>
+                  <h4 className="text-base font-black leading-tight text-white drop-shadow-sm group-hover:underline">
+                    {servicesData[3].title}
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            {/* 6. Service Card 05 */}
+            <div className="md:col-span-1 h-[240px] border-b md:border-r border-slate-150 relative overflow-hidden group">
+              <div
+                onClick={() => setSelectedService(servicesData[4])}
+                className="relative w-full h-full cursor-pointer overflow-hidden flex flex-col justify-end p-8"
+              >
+                <img
+                  src={servicesData[4].src}
+                  alt={servicesData[4].title}
+                  className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-slate-950/60 group-hover:bg-slate-950/50 transition-colors duration-300" />
+                <div className="relative z-10 text-white space-y-2">
+                  <span className="block text-[10px] font-black text-white/70 tracking-widest uppercase">
+                    {servicesData[4].number}
+                  </span>
+                  <h4 className="text-base font-black leading-tight text-white drop-shadow-sm group-hover:underline">
+                    {servicesData[4].title}
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            {/* 7. Service Card 06 */}
+            <div className="md:col-span-1 h-[240px] border-b border-slate-150 relative overflow-hidden group">
+              <div
+                onClick={() => setSelectedService(servicesData[5])}
+                className="relative w-full h-full cursor-pointer overflow-hidden flex flex-col justify-end p-8"
+              >
+                <img
+                  src={servicesData[5].src}
+                  alt={servicesData[5].title}
+                  className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-slate-950/60 group-hover:bg-slate-950/50 transition-colors duration-300" />
+                <div className="relative z-10 text-white space-y-2">
+                  <span className="block text-[10px] font-black text-white/70 tracking-widest uppercase">
+                    {servicesData[5].number}
+                  </span>
+                  <h4 className="text-base font-black leading-tight text-white drop-shadow-sm group-hover:underline">
+                    {servicesData[5].title}
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            {/* 8. Phone Contact Banner (Row 3, Col 1-2 - Curved bottom-right banner matching image) */}
+            <div className="md:col-span-2 bg-[#72abd4] text-white p-8 md:p-10 flex flex-col justify-center rounded-br-[100px] gap-1 shadow-inner md:border-r border-slate-150">
+              <div className="flex items-center gap-2.5 text-white/95">
+                <Phone className="w-4 h-4 fill-white text-[#72abd4]" />
+                <span className="text-[10px] font-black tracking-widest uppercase">HUBUNGI KONTAK</span>
+              </div>
+              <p className="text-xl md:text-2xl font-black font-mono tracking-wide text-white mt-1">
+                (0711) 5612838
+              </p>
+            </div>
+
+          </div>
+        </div>
       </section>
 
       {/* 5. TIM MEDIS AHLI KAMI SECTION (WITH AUTO-SCROLL CAROUSEL) */}
@@ -1181,6 +1350,49 @@ export default function Beranda() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               ></iframe>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Service Details Modal Popup */}
+      <AnimatePresence>
+        {selectedService && (
+          <div className="fixed inset-0 h-screen z-55 overflow-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-slate-950/40 cursor-pointer"
+              onClick={() => setSelectedService(null)}
+            />
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white max-w-3xl w-full h-[80vh] md:h-[85vh] rounded-3xl overflow-hidden border border-slate-100 shadow-2xl relative flex flex-col animate-fade-in"
+            >
+              <button
+                onClick={() => setSelectedService(null)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer z-10"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="h-56 md:h-80 w-full relative shrink-0">
+                <img src={selectedService.src} alt={selectedService.title} className="w-full h-full object-cover object-center" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/20 to-transparent" />
+                <div className="absolute bottom-4 left-6 text-white space-y-1">
+                  <span className="inline-block bg-white/20 text-white backdrop-blur-xs px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider">
+                    {selectedService.category}
+                  </span>
+                  <h4 className="text-lg md:text-2xl font-black">{selectedService.title}</h4>
+                </div>
+              </div>
+
+              <div className="p-6 md:p-8 overflow-y-auto flex-1 text-xs md:text-sm leading-relaxed text-slate-650 font-medium font-sans">
+                {selectedService.content}
+              </div>
             </motion.div>
           </div>
         )}
