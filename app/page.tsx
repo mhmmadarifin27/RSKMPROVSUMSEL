@@ -532,7 +532,7 @@ export default function Beranda() {
                 <span className="text-xs font-black text-primary tracking-widest uppercase">MUTU & LAYANAN</span>
                 <h3 className="text-2xl md:text-3.5xl font-black text-slate-800 tracking-tight leading-tight">
                   Perawatan Mata Modern. <br />
-                  <span className="text-slate-400">Keunggulan Klinis Terintegrasi.</span>
+                  <span className="text-primary">Keunggulan Klinis Terintegrasi.</span>
                 </h3>
                 <p className="text-xs md:text-sm text-slate-500 font-semibold leading-relaxed">
                   Kami berkomitmen memberikan pelayanan kesehatan mata paripurna berstandar nasional dan internasional demi memulihkan penglihatan Anda.
@@ -689,9 +689,9 @@ export default function Beranda() {
             </div>
 
             {/* 8. Phone Contact Banner (Row 3, Col 1-2 - Curved bottom-right banner matching image) */}
-            <div className="md:col-span-2 bg-[#72abd4] text-white p-8 md:p-10 flex flex-col justify-center rounded-br-[100px] gap-1 shadow-inner md:border-r border-slate-150">
+            <div className="md:col-span-2 bg-primary text-white p-8 md:p-10 flex flex-col justify-center rounded-br-[100px] gap-1 shadow-inner md:border-r border-slate-150">
               <div className="flex items-center gap-2.5 text-white/95">
-                <Phone className="w-4 h-4 fill-white text-[#72abd4]" />
+                <Phone className="w-4 h-4 fill-white text-primary" />
                 <span className="text-[10px] font-black tracking-widest uppercase">HUBUNGI KONTAK</span>
               </div>
               <p className="text-xl md:text-2xl font-black font-mono tracking-wide text-white mt-1">
